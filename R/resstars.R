@@ -53,6 +53,9 @@ resstars <- function(mat, nams, digits = 3){
 
   colnames(z) <- NULL
 
+  rnams <- rownames(z)
+  rownames(z) <- paste0("$",rnams,"$")
+
 
   for (row in rownames(z)){
     cat(row, "& ")

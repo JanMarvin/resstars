@@ -148,6 +148,7 @@ resstars2 <- function(mat, nams, digits = 3){
     varname <- c(varname, var_i)
   }
 
+  mnams <- unique(modname)
   rnams <- unique(varname)
 
   mat <- round(mat, digits = digits)
@@ -189,7 +190,7 @@ resstars2 <- function(mat, nams, digits = 3){
 
   cat("\\toprule \n")
 
-  cat("& \\multicolumn{2}{c}{$", modname[1],"$} & \\multicolumn{2}{c}{$",modname[2],"$} \\\\ \n")
+  cat("& \\multicolumn{2}{c}{$", mnams[1],"$} & \\multicolumn{2}{c}{$",mnams[2],"$} \\\\ \n")
 
   cat(" & ", nams, "\n")
 

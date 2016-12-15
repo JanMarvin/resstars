@@ -10,4 +10,8 @@ library(resstars)
 
 mm <- summary(lm(cars))$coefficients
 resstars(mm)
+
+rownames(mm) <- c("a_variable1", "b_variable1")
+resstars2(mm)
+
 ```

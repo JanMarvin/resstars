@@ -4,13 +4,15 @@
 \alias{resstars2}
 \title{Combine two variables next to each other}
 \usage{
-resstars2(mat, nams, digits = 3)
+resstars2(mat, nams, p000 = TRUE, digits = 3)
 }
 \arguments{
 \item{mat}{\emph{character.} Matrix to be converted to LaTeX table.}
 
 \item{nams}{\emph{character.} Character vector of length two containing
 colnames.}
+
+\item{p000}{\emph{logical.} If TRUE p < 0.000 else p < 0.001}
 
 \item{digits}{\emph{integer.} Number of digits to be presented.}
 }

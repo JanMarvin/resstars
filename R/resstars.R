@@ -22,13 +22,14 @@
 #' @param mat  \emph{character.} Matrix to be converted to LaTeX table.
 #' @param nams \emph{character.} Character vector of length two containing
 #' colnames.
+#' @param p000 \emph{logical.} If TRUE p < 0.000 else p < 0.001
 #' @param digits \emph{integer.} Number of digits to be presented.
 #' @seealso \code{\link[xtable]{xtable}} in package \code{xtable} and
 #'  \code{stargazer} for different approaches
 #' @author Jan Marvin Garbuszus \email{jan.garbuszus@@ruhr-uni-bochum.de}
 #' @export
 
-resstars <- function(mat, nams, digits = 3){
+resstars <- function(mat, nams, p000 = TRUE, digits = 3){
 
   cat("%%%%%%%%%%%%%%%%%%% \n")
   cat("% Coef und SE table \n")
@@ -63,14 +64,25 @@ resstars <- function(mat, nams, digits = 3){
 
   pval <- mat[,4]
   for (i in 1:n){
-    if (pval[i] <= 0.000)
-      stars[i] <- "$^{***}$"
-    if (pval[i] > 0.000 & pval[i] <= 0.001)
-      stars[i] <- "$^{**}$"
-    if (pval[i] > 0.001 & pval[i] <= 0.01)
-      stars[i] <- "$^{*}$"
-    if (pval[i] > 0.01 & pval[i] <= 0.05)
-      stars[i] <- "$^{.}$"
+
+    if (p000==TRUE) {
+      if (pval[i] <= 0.000)
+        stars[i] <- "$^{***}$"
+      if (pval[i] > 0.000 & pval[i] <= 0.001)
+        stars[i] <- "$^{**}$"
+      if (pval[i] > 0.001 & pval[i] <= 0.01)
+        stars[i] <- "$^{*}$"
+      if (pval[i] > 0.01 & pval[i] <= 0.05)
+        stars[i] <- "$^{.}$"
+    } else {
+      if (pval[i] < 0.001)
+        stars[i] <- "$^{***}$"
+      if (pval[i] >= 0.001 & pval[i] <= 0.01)
+        stars[i] <- "$^{**}$"
+      if (pval[i] > 0.01 & pval[i] <= 0.1)
+        stars[i] <- "$^{*}$"
+    }
+
     if(pval[i] == 99999)
       v_se[i] <- "$@$"
   }
@@ -93,10 +105,15 @@ resstars <- function(mat, nams, digits = 3){
   }
   cat("\\bottomrule \n")
 
-  cat("\\addlinespace[1ex] \n")
-  cat("\\multicolumn{3}{l}{\\textsuperscript{***}$p<0.000$, ")
-  cat("\\textsuperscript{**}$p<0.001$, ")
-  cat("\\textsuperscript{*}$p<0.01$} \n")
+  if(p000 == TRUE) {
+    cat("\\multicolumn{3}{l}{\\textsuperscript{***}$p<0.000$, ")
+    cat("\\textsuperscript{**}$p<0.001$, ")
+    cat("\\textsuperscript{*}$p<0.01$} \n")
+  } else {
+    cat("\\multicolumn{3}{l}{\\textsuperscript{***}$p<0.001$, ")
+    cat("\\textsuperscript{**}$p<0.01$, ")
+    cat("\\textsuperscript{*}$p<0.1$} \n")
+  }
 
   cat("\\end{tabular} \n")
   cat("\\end{table} \n")
@@ -111,12 +128,13 @@ resstars <- function(mat, nams, digits = 3){
 #' @param mat  \emph{character.} Matrix to be converted to LaTeX table.
 #' @param nams \emph{character.} Character vector of length two containing
 #' colnames.
+#' @param p000 \emph{logical.} If TRUE p < 0.000 else p < 0.001
 #' @param digits \emph{integer.} Number of digits to be presented.
 #' @seealso \code{\link[xtable]{xtable}} in package \code{xtable} and
 #'  \code{stargazer} for different approaches
 #' @author Jan Marvin Garbuszus \email{jan.garbuszus@@ruhr-uni-bochum.de}
 #' @export
-resstars2 <- function(mat, nams, digits = 3){
+resstars2 <- function(mat, nams, p000 = TRUE, digits = 3){
 
   cat("%%%%%%%%%%%%%%%%%%% \n")
   cat("% Coef und SE table \n")
@@ -169,14 +187,25 @@ resstars2 <- function(mat, nams, digits = 3){
 
   pval <- mat[,4]
   for (i in 1:n){
-    if (pval[i] <= 0.000)
-      stars[i] <- "$^{***}$"
-    if (pval[i] > 0.000 & pval[i] <= 0.001)
-      stars[i] <- "$^{**}$"
-    if (pval[i] > 0.001 & pval[i] <= 0.01)
-      stars[i] <- "$^{*}$"
-    if (pval[i] > 0.01 & pval[i] <= 0.05)
-      stars[i] <- "$^{.}$"
+
+    if (p000==TRUE) {
+      if (pval[i] <= 0.000)
+        stars[i] <- "$^{***}$"
+      if (pval[i] > 0.000 & pval[i] <= 0.001)
+        stars[i] <- "$^{**}$"
+      if (pval[i] > 0.001 & pval[i] <= 0.01)
+        stars[i] <- "$^{*}$"
+      if (pval[i] > 0.01 & pval[i] <= 0.05)
+        stars[i] <- "$^{.}$"
+    } else {
+      if (pval[i] < 0.001)
+        stars[i] <- "$^{***}$"
+      if (pval[i] >= 0.001 & pval[i] <= 0.01)
+        stars[i] <- "$^{**}$"
+      if (pval[i] > 0.01 & pval[i] <= 0.1)
+        stars[i] <- "$^{*}$"
+    }
+
     if(pval[i] == 99999)
       v_se[i] <- "$@$"
   }
@@ -207,9 +236,16 @@ resstars2 <- function(mat, nams, digits = 3){
   cat("\\bottomrule \n")
 
   cat("\\addlinespace[1ex] \n")
-  cat("\\multicolumn{3}{l}{\\textsuperscript{***}$p<0.000$, ")
-  cat("\\textsuperscript{**}$p<0.001$, ")
-  cat("\\textsuperscript{*}$p<0.01$} \n")
+
+  if(p000 == TRUE) {
+    cat("\\multicolumn{3}{l}{\\textsuperscript{***}$p<0.000$, ")
+    cat("\\textsuperscript{**}$p<0.001$, ")
+    cat("\\textsuperscript{*}$p<0.01$} \n")
+  } else {
+    cat("\\multicolumn{3}{l}{\\textsuperscript{***}$p<0.001$, ")
+    cat("\\textsuperscript{**}$p<0.01$, ")
+    cat("\\textsuperscript{*}$p<0.1$} \n")
+  }
 
   cat("\\end{tabular} \n")
   cat("\\end{table} \n")

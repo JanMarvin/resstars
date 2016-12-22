@@ -104,6 +104,7 @@ resstars <- function(mat, nams, p000 = TRUE, digits = 3){
     cat(z[row,], "\n")
   }
   cat("\\bottomrule \n")
+  cat("\\addlinespace[1ex] \n")
 
   if(p000 == TRUE) {
     cat("\\multicolumn{3}{l}{\\textsuperscript{***}$p<0.000$, ")
